@@ -1,0 +1,383 @@
+query: create table department with deptId , deptName
+
+SQL>
+	create table department
+	( deptId number(20) primary key,
+ 	  deptName varchar(50)
+	);
+
+output : 
+	Table created.
+
+
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+
+
+
+query: create  employee (empl) table with empId, empName,salary, joinDate, deptId
+
+SQL>
+	create table employee
+	( empId number(20) primary key,
+  	  empName varchar(50),
+  	  salary number(20),
+  	  joinDate date,
+  	  deptId number(20),
+  	  foreign key (deptId) references department(deptId)
+	);
+
+ERROR at line 6:
+ORA-00907: missing right parenthesis
+correction: added  ,    deptId number(20)
+
+ERROR: 
+joindate data,
+         *
+ERROR at line 5:
+ORA-00902: invalid datatype
+CORRETION : data changed date (datatype)
+
+output: 
+	Table created.
+
+
+
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+
+
+Query: insert a row into department table
+ 
+
+SQL>
+	insert into department (deptId , deptName) values (1,'HR');
+
+
+output:
+	1 row created.
+
+
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+
+
+Query : insert multiple rows into department table
+
+
+
+SQL>
+
+	insert all
+	into department (deptId , deptName) values (2,'ACC')
+	into department (deptId , deptName) values (3,'CSE')
+	into department (deptId , deptName) values (4,'AIDS')
+	into department (deptId , deptName) values (5,'ECE')
+	into department (deptId , deptName) values (6,'AIML')
+	select * from DUAL;
+
+
+output:
+	5 rows created.
+
+
+
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+
+
+
+
+Query: insert a row into employee table
+
+
+
+SQL>
+	insert into employee (empId, empName,salary, joinDate, deptId) values (1,'rajesh', 34000, 	to_date('27-09-2024','dd-mm-yy'),1);
+
+
+output:
+	1 row created.
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+Query: insert multiple rows into  employee table
+
+
+
+SQL>
+	
+	insert All
+	into employee (empId, empName,salary, joinDate, deptId) values (2,'syed', 124000, 		 	       to_date('10-09-2020','dd-mm-yy'),2)
+	into employee (empId, empName,salary, joinDate, deptId) values (3,'imad', 114000, 			       to_date('13-06-2021','dd-mm-yy'),3)
+	into employee (empId, empName,salary, joinDate, deptId) values (4,'affron', 1000, 	 		       to_date('14-06-2015','dd-mm-yy'),4)
+	into employee (empId, empName,salary, joinDate, deptId) values (5,'mustafa', 124000, 			       to_date('02-03-2020','dd-mm-yy'),2)
+	into employee (empId, empName,salary, joinDate, deptId) values (6,'sami', 54000, 	      		       to_date('10-07-2016','dd-mm-yy'),3)
+	into employee (empId, empName,salary, joinDate, deptId) values (7,'junaid', 50000, 		  	       to_date('20-11-2025','dd-mm-yy'),4)
+	select * from DUAL ;
+
+
+
+output:
+	6 rows selected.
+
+
+
+
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+
+
+
+
+Query: find employee whose salary is greater than 50000.
+
+
+SQL>
+	select * from employee where salary>50000;
+
+
+output:
+
+
+     EMPID EMPNAME                                                SALARY
+---------- -------------------------------------------------- ----------
+JOINDATE      DEPTID
+--------- ----------
+         2 syed                                                   124000
+10-SEP-20          2
+
+         3 imad                                                   114000
+13-JUN-21          3
+
+         5 mustafa                                                124000
+02-MAR-20          2
+
+
+     EMPID EMPNAME                                                SALARY
+---------- -------------------------------------------------- ----------
+JOINDATE      DEPTID
+--------- ----------
+         6 sami                                                    54000
+10-JUL-16          3
+
+
+
+
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+
+
+
+Query: find employee whose Name starts with 'A'.
+
+
+
+SQL>
+	select * from employee where empName  like 'a%';
+
+
+
+output:
+
+
+     EMPID EMPNAME                                                SALARY
+---------- -------------------------------------------------- ----------
+JOINDATE      DEPTID
+--------- ----------
+         4 affron                                                   1000
+14-JUN-15          4
+
+         8 ayaan                                                   60000
+10-SEP-00          2
+
+        10 abcd                                                    15500
+14-JUN-35          4
+
+
+     EMPID EMPNAME                                                SALARY
+---------- -------------------------------------------------- ----------
+JOINDATE      DEPTID
+--------- ----------
+        12 ali                                                     94000
+10-JUL-05          3
+
+
+
+
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+
+
+Query: modify table change size of empName to 40
+
+
+SQL:
+	alter table employee modify empName varchar(40);
+	
+
+
+output:
+	Table altered.
+
+
+
+
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+
+
+
+Query: Add a new column to table empcnt
+
+SQL:
+	alter table employee add empcnt varchar(40);
+
+
+output:
+	Table altered.
+
+
+
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+
+
+
+Query: get the sum of salary  of each department
+
+
+
+SQL:
+	select sum(salary) from employee group by DEPTID;
+
+
+output:	
+	
+           SUM(SALARY)
+           -----------
+                248000
+                 51000
+                168000
+
+
+
+
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+
+
+
+Query: create a new table from a existing  table with a where clause
+
+
+SQL:
+	 create table employee22 as 
+	 select * from employee 
+	 where salary> 50000;
+
+
+output:
+	 Table created.	
+
+
+
+ SQL:  
+	 desc employee22;
+
+
+output:
+	 Name                                       Null?    Type
+ ----------------------------------------- -------- ------ ---------------------
+ EMPID                                              	    NUMBER(20)
+ EMPNAME                                            	    VARCHAR2(40)
+ SALARY                                             	    NUMBER(20)
+ JOINDATE                                           	    DATE
+ DEPTID                                             	    NUMBER(20)
+ EMPCNT                                             	    VARCHAR2(40)
+
+
+
+
+
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+
+
+
+Query: group by and having 
+
+
+SQL: 
+	select empName,sum(salary) from employee group by empName having sum(salary)>50000;
+
+
+output:
+
+	
+	   EMPNAME                                  SUM(SALARY)
+	   ---------------------------------------- -----------
+	   imad                                          114000
+	   mustafa                                       124000
+	   sami                                           54000
+ 	   syed                                          124000
+
+
+
+--------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
